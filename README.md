@@ -58,7 +58,7 @@ The graph representation is identical to Model 2. However, instead of using a di
 @article{WeiLeeBuehler_2023,
     title   = {Modeling and design of hierarchical bio-inspired de novo spider web structures using deep learning and additive manufacturing },
     author  = {W. Lu, N.A. Lee, M.J. Buehler},
-    journal = {},
+    journal = {PNAS},
     year    = {2023},
     volume  = {},
     pages   = {},
