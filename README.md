@@ -44,9 +44,9 @@ The model is constructed similarly to Model 1, except for the representation z. 
 The graph representation is identical to Model 2. However, instead of using a diffusion model we use an autoregressive transformer architecture with full adjacency matrix representation. 
 
 ```
-max_length2=32
+max_length=32
 embed_dim_neighbor=3
-max_neighbors2=5
+max_neighbors=5
 GWebT = GraphWebTransformer(
         dim=128,
         depth=3,
@@ -54,10 +54,10 @@ GWebT = GraphWebTransformer(
         heads = 8,
         dropout = 0.,
         ff_mult = 4,
-        predict_neighbors=True,#True, #False,#only xyz
-        max_length=max_length2,
+        predict_neighbors=True,
+        max_length=max_length,
         neigh_emb_trainable=True,
-        max_norm=1.,#embedding ayer mnormed
+        max_norm=1.,
         pos_emb_fourier=True,
         pos_emb_fourier_add=False,
         text_embed_dim = 256,
@@ -70,7 +70,7 @@ GWebT = GraphWebTransformer(
     ).cuda()
 
 sequences= torch.randn(4, 14 ).cuda()
-output=torch.randint (0,max_length2, (4, 36 , 32)).cuda().float()
+output=torch.randint (0,max_length, (4, 36 , 32)).cuda().float()
 
 loss=GWebT(
         sequences=sequences,#conditioning
@@ -83,7 +83,7 @@ loss.backward()
 print ("Loss: ", loss)
 
 result = GWebT.generate(sequences=sequences,
-        tokens_to_generate=max_length2, 
+        tokens_to_generate=max_length, 
         cond_scale = 1., temperature=3, use_argmax=True,
      ) 
 print (result.shape) #(b, [x,y,z, N1, N2, N3, .. N_max_neighbor, max_length])
