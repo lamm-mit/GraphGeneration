@@ -147,6 +147,12 @@ print (result.shape) #(b, [x,y,z, N1, N2, N3, .. N_max_neighbor, max_length])
 
 ![PNASFig2](https://user-images.githubusercontent.com/101393859/229208831-88c2df9f-e0b8-49cf-b900-0d152ff37759.png)
 
+### Sample results (details, see paper)
+
+![image](https://github.com/lamm-mit/GraphGeneration/assets/101393859/81c230c2-a38d-421e-b814-a833a27749c4)
+
+![image](https://github.com/lamm-mit/GraphGeneration/assets/101393859/57cab90f-7368-4b64-8d59-7b88b370e267)
+
 ```
 @article{WeiLeeBuehler_2023,
     title   = {Modeling and design of hierarchical bio-inspired de novo spider web structures using deep learning and additive manufacturing},
