@@ -46,6 +46,8 @@ In this approach, we describe graph representations z as defined in Figure S2 in
 ```
 from GraphDiffusion import AnalogDiffusionSparse
 
+device='cuda'
+
 max_neighbors = 5
 predict_neighbors=True
 pred_dim=3+max_neighbors*predict_neighbors
@@ -62,7 +64,14 @@ model =AnalogDiffusionSparse(
                 text_embed_dim = 256,
                 embed_dim_position=256,
                 predict_neighbors=predict_neighbors,
-                    )  .to(device)  
+                    )  .to(device)
+
+timesteps = 100
+result=model.sample ( y_train_batch,
+                cond_scale=1.0,
+                timesteps=timesteps,clamp=clamp,device=device,
+                    ).cpu()
+
 ```
 
 #### Model 2: Diffusion model with full neighbor matrix representation
@@ -88,7 +97,13 @@ model =AnalogDiffusionFull(
                 text_embed_dim = 256,
                 embed_dim_position=256,
                 predict_neighbors=predict_neighbors,
-                    )  .to(device)  
+                    )  .to(device)
+
+timesteps = 100
+result=model.sample ( y_train_batch,
+                cond_scale=1.0,
+                timesteps=timesteps,clamp=clamp,device=device,
+                    ).cpu()
 ```
                     
 #### Model 3: Autoregressive transformer architecture with full neighbor matrix representation
@@ -137,8 +152,10 @@ loss.backward()
 print ("Loss: ", loss)
 
 result = GWebT.generate(sequences=sequences,
-        tokens_to_generate=max_length, 
-        cond_scale = 1., temperature=3, use_argmax=True,
+          tokens_to_generate=max_length, 
+          cond_scale = 1.,
+          temperature=3,
+          use_argmax=True,
      ) 
 print (result.shape) #(b, [x,y,z, N1, N2, N3, .. N_max_neighbor, max_length])
 ```
