@@ -66,6 +66,14 @@ model =AnalogDiffusionSparse(
                 predict_neighbors=predict_neighbors,
                     )  .to(device)
 
+loss=model (  y_train_batch , X_train_batch)  
+loss.backward( )
+optimizer.step()
+```
+
+Sampling
+
+```
 timesteps = 100
 result=model.sample ( y_train_batch,
                 cond_scale=1.0,
@@ -99,6 +107,12 @@ model =AnalogDiffusionFull(
                 predict_neighbors=predict_neighbors,
                     )  .to(device)
 
+loss=model (  y_train_batch , X_train_batch)  
+loss.backward( )
+optimizer.step()
+```
+Sampling
+```
 timesteps = 100
 result=model.sample ( y_train_batch,
                 cond_scale=1.0,
@@ -150,7 +164,9 @@ loss=GWebT(
        )
 loss.backward()
 print ("Loss: ", loss)
-
+```
+Sampling
+```
 result = GWebT.generate(sequences=sequences,
           tokens_to_generate=max_length, 
           cond_scale = 1.,
