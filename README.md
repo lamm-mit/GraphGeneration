@@ -14,7 +14,7 @@ conda create -n GraphGeneration python=3.8
 conda activate GraphGeneration
 ```
 ```
-git clone https://github.com/lamm-mit/HierarchicalDesign/
+git clone https://github.com/lamm-mit/GraphGeneration/
 cd GraphGeneration
 ```
 
@@ -43,7 +43,10 @@ The model is constructed similarly to Model 1, except for the representation z. 
 
 The graph representation is identical to Model 2. However, instead of using a diffusion model we use an autoregressive transformer architecture with full adjacency matrix representation. 
 
-```embed_dim_neighbor=32
+```
+from GraphDiffusion import GraphWebTransformer
+
+embed_dim_neighbor=32
 
 GWebT = GraphWebTransformer(
         dim=512,
