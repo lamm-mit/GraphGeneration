@@ -35,10 +35,54 @@ jupyter-lab --no-browser
 
 In this approach, we describe graph representations z as defined in Figure S2 in the paper. Since we use a sparse representation, the input structure consists of a list of embeddings of length N, padded with zeros for graph samples of length less than N. 
 
+```
+from GraphDiffusion import AnalogDiffusionSparse
+
+max_neighbors = 5
+predict_neighbors=True
+pred_dim=3+max_neighbors*predict_neighbors
+ 
+context_embedding_max_length=y_data.shape[1]
+model =AnalogDiffusionSparse( 
+                max_length=max_length,
+                pred_dim=pred_dim,
+                channels=128,
+                unet_type='cfg',  
+                context_embedding_max_length=context_embedding_max_length,
+                pos_emb_fourier=True,
+                pos_emb_fourier_add=False,
+                text_embed_dim = 256,
+                embed_dim_position=256,
+                predict_neighbors=predict_neighbors,
+                    )  .to(device)  
+```
+
 #### Model 2: Diffusion model with full neighbor matrix representation
 
 The model is constructed similarly to Model 1, except for the representation z. Here, z captures node positions and a full adjacency matrix.
 
+```
+from GraphDiffusion import AnalogDiffusionFull 
+
+predict_neighbors=True
+pred_dim=3+ max_length
+
+context_embedding_max_length=y_data.shape[1]
+
+model =AnalogDiffusionFull( 
+                max_length=max_length,
+                pred_dim=pred_dim,
+                channels=256,
+                unet_type='cfg', #'base', #'cfg',
+                context_embedding_max_length=context_embedding_max_length,
+                pos_emb_fourier=True,
+                pos_emb_fourier_add=False,
+                text_embed_dim = 256,
+                embed_dim_position=256,
+                predict_neighbors=predict_neighbors,
+                    )  .to(device)  
+```
+                    
 #### Model 3: Autoregressive transformer architecture with full neighbor matrix representation
 
 The graph representation is identical to Model 2. However, instead of using a diffusion model we use an autoregressive transformer architecture with full adjacency matrix representation. 
