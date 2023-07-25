@@ -42,6 +42,52 @@ The model is constructed similarly to Model 1, except for the representation z. 
 
 The graph representation is identical to Model 2. However, instead of using a diffusion model we use an autoregressive transformer architecture with full adjacency matrix representation. 
 
+```
+max_length2=32
+embed_dim_neighbor=3
+max_neighbors2=5
+GWebT = GraphWebTransformer(
+        dim=128,
+        depth=3,
+        dim_head = 64,
+        heads = 8,
+        dropout = 0.,
+        ff_mult = 4,
+        predict_neighbors=True,#True, #False,#only xyz
+        max_length=max_length2,
+        neigh_emb_trainable=True,
+        max_norm=1.,#embedding ayer mnormed
+        pos_emb_fourier=True,
+        pos_emb_fourier_add=False,
+        text_embed_dim = 256,
+        embed_dim_position=256,
+        embed_dim_neighbor=embed_dim_neighbor,
+        use_categorical_for_neighbors = False,
+        predict_distance_matrix=True,
+        cond_drop_prob = 0.25,
+        max_text_len = 14
+    ).cuda()
+
+sequences= torch.randn(4, 14 ).cuda()
+output=torch.randint (0,max_length2, (4, 36 , 32)).cuda().float()
+
+loss=GWebT(
+        sequences=sequences,#conditioning
+        output=output,
+        text_mask = None,
+        return_loss = True,
+        encode_graphs=True,
+       )
+loss.backward()
+print ("Loss: ", loss)
+
+result = GWebT.generate(sequences=sequences,
+        tokens_to_generate=max_length2, 
+        cond_scale = 1., temperature=3, use_argmax=True,
+     ) 
+print (result.shape) #(b, [x,y,z, N1, N2, N3, .. N_max_neighbor, max_length])
+```
+
 ### Model weights and data
 
 - [Dataset](https://www.dropbox.com/s/38jwpqtz6c8rcey/dataset_webs_medium.pt?dl=0) 
