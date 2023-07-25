@@ -149,7 +149,15 @@ print (result.shape) #(b, [x,y,z, N1, N2, N3, .. N_max_neighbor, max_length])
 
 ### Sample results (details, see paper)
 
+Graph construction 
+
+![image](https://github.com/lamm-mit/GraphGeneration/assets/101393859/f2cd9d43-e4e3-42ab-a27a-8b7de6c3f13e)
+
+Sample graph (helical shape)
+
 ![image](https://github.com/lamm-mit/GraphGeneration/assets/101393859/81c230c2-a38d-421e-b814-a833a27749c4)
+
+Additive manufacturing of attractor designs
 
 ![image](https://github.com/lamm-mit/GraphGeneration/assets/101393859/57cab90f-7368-4b64-8d59-7b88b370e267)
 
