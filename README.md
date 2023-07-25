@@ -43,31 +43,30 @@ The model is constructed similarly to Model 1, except for the representation z. 
 
 The graph representation is identical to Model 2. However, instead of using a diffusion model we use an autoregressive transformer architecture with full adjacency matrix representation. 
 
-```
-max_length=32
-embed_dim_neighbor=3
-max_neighbors=5
+```embed_dim_neighbor=32
+
 GWebT = GraphWebTransformer(
-        dim=128,
-        depth=3,
+        dim=512,
+        depth=12,
         dim_head = 64,
-        heads = 8,
+        heads = 16,
         dropout = 0.,
         ff_mult = 4,
-        predict_neighbors=True,
         max_length=max_length,
-        neigh_emb_trainable=True,
+        neigh_emb_trainable=False,
         max_norm=1.,
         pos_emb_fourier=True,
         pos_emb_fourier_add=False,
-        text_embed_dim = 256,
-        embed_dim_position=256,
+        text_embed_dim = 64,
+        embed_dim_position=64,
         embed_dim_neighbor=embed_dim_neighbor,
+        predict_neighbors=True,#False,#whether or not to predict neighbors..
+        pos_fourier_graph_dim=67,#fourier pos encoding of entire graph
         use_categorical_for_neighbors = False,
         predict_distance_matrix=True,
         cond_drop_prob = 0.25,
-        max_text_len = 14
-    ).cuda()
+        max_text_len = y_data.shape[1],     
+).cuda()
 
 sequences= torch.randn(4, 14 ).cuda()
 output=torch.randint (0,max_length, (4, 36 , 32)).cuda().float()
